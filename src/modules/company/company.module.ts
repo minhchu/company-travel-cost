@@ -9,4 +9,4 @@ import { CompanyService } from './company.service';
   providers: [CompanyService],
   exports: [CompanyService],
 })
-export class TravelModule {}
+export class ComapnyModule {}

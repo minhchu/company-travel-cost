@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import apiConfig from './config/api';
-import { TravelModule } from './travels/travel.module';
+import { ComapnyModule } from './modules/company/company.module';
 
 @Module({
   imports: [
@@ -11,7 +11,7 @@ import { TravelModule } from './travels/travel.module';
       isGlobal: true,
       load: [apiConfig],
     }),
-    TravelModule,
+    ComapnyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
