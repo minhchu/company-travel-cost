@@ -4,7 +4,7 @@ Query:
 
 ```graphql
 {
-  companies( id: "uuid-2" ) { 
+  company( id: "uuid-2" ) { 
     id, createdAt, name, parentId, cost, children 
   }
 }
@@ -15,7 +15,7 @@ Result:
 ```json
 {
   "data": {
-    "companies": [
+    "company": [
       {
         "id": "uuid-2",
         "createdAt": "2021-02-25T10:35:32.978Z",

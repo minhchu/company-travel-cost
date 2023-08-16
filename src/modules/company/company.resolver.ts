@@ -6,7 +6,7 @@ import { Company } from './models/company.model';
 export class CompanyResolver {
   constructor(private companyService: CompanyService) {}
 
-  @Query((returns) => [Company], { name: 'companies' })
+  @Query((returns) => [Company], { name: 'company' })
   async company(@Args('id') id: string) {
     return await this.companyService.buildCompanyTree(id);
   }
