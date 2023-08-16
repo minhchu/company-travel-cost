@@ -32,19 +32,33 @@ export class CompanyService {
     private http: HttpService,
   ) {}
 
-  async buildCompanyTree(): Promise<any> {
+  async buildCompanyTree(rootId = '0'): Promise<any> {
     const companies = await this.getCompanyData();
 
     const travelCostByCompanyId = await this.buildTravelCostByCompanyId();
 
     const tree = new TreeModel();
 
-    let root: null | TreeModel.Node<any>;
+    let root: undefined | TreeModel.Node<any>;
 
     const result = companies.reduce<Array<CompanyTree>>(
       (accumulator, current) => {
-        // TODO: if there are multiple roots ?
-        if (current.parentId === '0') {
+        // TODO: MUST create a root before looping throuh all companies
+        if (rootId === '0' && current.parentId === '0') {
+          const cost = travelCostByCompanyId.get(current.id);
+
+          const node = {
+            ...current,
+            cost,
+            children: [],
+          };
+
+          root = tree.parse(node);
+
+          return [...accumulator, node];
+        }
+
+        if (rootId === current.id) {
           const cost = travelCostByCompanyId.get(current.id);
 
           const node = {
@@ -60,9 +74,17 @@ export class CompanyService {
 
         const parentId = current.parentId;
 
+        if (root === undefined) {
+          return accumulator;
+        }
+
         const child = root.first((node) => {
           return node.model.id === parentId;
         });
+
+        if (!child) {
+          return accumulator;
+        }
 
         const newNode = new TreeModel();
 

@@ -1,4 +1,4 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { CompanyService } from './company.service';
 import { Company } from './models/company.model';
 
@@ -7,8 +7,7 @@ export class CompanyResolver {
   constructor(private companyService: CompanyService) {}
 
   @Query((returns) => [Company], { name: 'companies' })
-  async company() {
-    // TODO: maybe we can get a particular cost of a company
-    return await this.companyService.buildCompanyTree();
+  async company(@Args('id') id: string) {
+    return await this.companyService.buildCompanyTree(id);
   }
 }
