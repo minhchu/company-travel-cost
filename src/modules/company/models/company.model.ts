@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
 export class Company {
@@ -17,6 +18,7 @@ export class Company {
   @Field()
   cost: number;
 
-  @Field()
-  children: Company[];
+  // TODO: this is not type-safe
+  @Field((type) => GraphQLJSON)
+  children: JSON;
 }
