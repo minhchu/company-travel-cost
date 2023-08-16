@@ -1,15 +1,9 @@
-import { HttpService } from '@nestjs/axios';
-import { Controller, Get, Inject } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+import { Controller, Get } from '@nestjs/common';
 import { CompanyService } from './company.service';
 
 @Controller('/api/companies')
 export class CompanyController {
-  constructor(
-    private config: ConfigService,
-    private http: HttpService,
-    private company: CompanyService,
-  ) {}
+  constructor(private company: CompanyService) {}
 
   @Get('/')
   async index() {
